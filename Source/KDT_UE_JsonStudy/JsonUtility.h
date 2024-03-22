@@ -127,3 +127,22 @@ public:
 		return GetJsonObject(p, data);
 	}
 };
+
+/*
+{
+    "name": "±èÇöÁø",
+    "age": 20,
+    "height": 180,
+    "gender": false,
+    "interests": [
+        "°ÔÀÓ",
+        "µ·",
+        "¸¶¼ú"
+    ],
+    "itemData":
+    {
+        "price": 0,
+        "name": ""
+    }
+}
+*/
