@@ -52,11 +52,11 @@ void AJsonPawn::DataToJsonExample()
 	info.gender = false;
 	info.interests = { TEXT("게임"), TEXT("돈"), TEXT("마술") };
 
-	FString jsonString = UJsonUtility::DataToJson<FUserInfo>(info);
+	FString jsonString = UJsonUtility::DataToJson<FUserInfo>(&info);
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *jsonString);
 
 	FItemData itemData;
-	jsonString = UJsonUtility::DataToJson<FItemData>(itemData);
+	jsonString = UJsonUtility::DataToJson<FItemData>(&itemData);
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *jsonString);
 
 

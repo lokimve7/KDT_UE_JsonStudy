@@ -7,6 +7,17 @@
 #include "JsonPawn.generated.h"
 
 USTRUCT(BlueprintType)
+struct FItemData
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY()
+	int32 price;
+	UPROPERTY()
+	FString name;
+};
+
+USTRUCT(BlueprintType)
 struct FUserInfo
 {
 	GENERATED_BODY()
@@ -21,18 +32,11 @@ public:
 	bool gender; // true : 여성, false : 남성
 	UPROPERTY()
 	TArray<FString> interests;
+	UPROPERTY()
+	FItemData itemData;
 };
 
-USTRUCT(BlueprintType)
-struct FItemData
-{
-	GENERATED_BODY()
-public:
-	UPROPERTY()
-	int32 price;
-	UPROPERTY()
-	FString name;
-};
+
 
 
 UCLASS()
