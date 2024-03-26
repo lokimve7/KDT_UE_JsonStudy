@@ -36,6 +36,21 @@ public:
 	FString name;
 };
 
+USTRUCT(BlueprintType)
+struct FPostInfo
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY()
+	int32 userId;
+	UPROPERTY()
+	int32 id;
+	UPROPERTY()
+	FString title;
+	UPROPERTY()
+	FString body;
+};
+
 
 USTRUCT(BlueprintType)
 struct FForecastInfo
