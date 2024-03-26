@@ -129,7 +129,7 @@ void AJsonPawn::RequestShortTermForecast()
 	// Request 생성 (HTTP 통신을 하게 해주는 객체)
 	TSharedPtr<IHttpRequest> httpRequest = FHttpModule::Get().CreateRequest();
 	// 요청해야하는 URL 셋팅
-	httpRequest->SetURL(TEXT("https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey=4U7VkjL1aXP2trryYu4AoFIViMd4dAx7n9id9UFIBsiCv0gZ2%2BYkcqMT2Lfaieq%2FT%2FYPxd7Y0I2%2Bh7SqqU6WcQ%3D%3D&pageNo=1&numOfRows=1000&dataType=JSON&base_date=20240326&base_time=0600&nx=55&ny=127"));
+	httpRequest->SetURL(TEXT("https://jsonplaceholder.typicode.com/posts/1"));
 	// 헤더를 셋팅를 추가해달라는 요청이 있으면
 	httpRequest->SetHeader(TEXT("Contnet-Type"), TEXT("application/x-www-form-urlencoded; charset=utf-8"));
 	// GET, POST, PUT, DELETE
@@ -150,13 +150,21 @@ void AJsonPawn::OnCompleteRequest(TSharedPtr<class IHttpRequest> Request, TShare
 	if (bConnectedSuccessfully)
 	{
 		FString jsonString = Response->GetContentAsString();
+
+
+		/*FResponse info;
+		FJsonObjectConverter::JsonObjectStringToUStruct(jsonString, &info);*/
 		
-		auto jsonObject = UJsonUtility::StringToJson(jsonString);
+		/*auto jsonObject = UJsonUtility::StringToJson(jsonString);
 		auto responseObject = jsonObject->GetObjectField(TEXT("response"));
 		auto bodyObject = responseObject->GetObjectField(TEXT("body"));
 		auto itemsObject = bodyObject->GetObjectField(TEXT("items"));
 		auto itemArray = itemsObject->GetArrayField(TEXT("item"));
-		UE_LOG(LogTemp, Warning, TEXT("item count : %d"), itemArray.Num());
+
+		TArray<FForecastInfo> forecatInfo;
+		FJsonObjectConverter::JsonArrayToUStruct(itemArray, &forecatInfo);*/
+
+		//UE_LOG(LogTemp, Warning, TEXT("item count : %d"), itemArray.Num());
 
 	}
 	else

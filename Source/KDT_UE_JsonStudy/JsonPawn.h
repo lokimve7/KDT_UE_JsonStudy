@@ -37,6 +37,65 @@ public:
 };
 
 
+USTRUCT(BlueprintType)
+struct FForecastInfo
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY()
+	FString baseDate;
+	UPROPERTY()
+	FString baseTime;
+	UPROPERTY()
+	FString category;
+	UPROPERTY()
+	int32 nx;
+	UPROPERTY()
+	int32 ny;
+	UPROPERTY()
+	FString obsrValue;
+};
+
+//
+//USTRUCT(BlueprintType)
+//struct FItemList
+//{
+//	GENERATED_BODY()
+//public:
+//	UPROPERTY()
+//	TArray<FForecastInfo> item;
+//};
+//
+//USTRUCT(BlueprintType)
+//struct FBody
+//{
+//	GENERATED_BODY()
+//public:
+//	UPROPERTY()
+//	FItemList items;
+//	UPROPERTY()
+//	FString dataType;
+//};
+//
+//USTRUCT(BlueprintType)
+//struct FForecast
+//{
+//	GENERATED_BODY()
+//public:
+//	UPROPERTY()
+//	FBody body;
+//};
+//
+//USTRUCT(BlueprintType)
+//struct FResponse
+//{
+//	GENERATED_BODY()
+//public:
+//	UPROPERTY()
+//	FForecast response;
+//};
+
+
 
 
 UCLASS()
