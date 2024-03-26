@@ -151,19 +151,22 @@ void AJsonPawn::OnCompleteRequest(TSharedPtr<class IHttpRequest> Request, TShare
 	{
 		FString jsonString = Response->GetContentAsString();
 
-		FPostInfo postInfo;
-		FJsonObjectConverter::JsonObjectStringToUStruct(jsonString, &postInfo);
+		// 방법 1. 구조체와 FJsonObjectConverter 이용
+		/*FPostInfo postInfo;
+		FJsonObjectConverter::JsonObjectStringToUStruct(jsonString, &postInfo);*/
 
+		// 방법 2. 직접 Json parsing
 		// jsonString -> jsonObject 바꾸자
 		TSharedRef<TJsonReader<>> jsonReader = TJsonReaderFactory<>::Create(jsonString);
 		TSharedPtr<FJsonObject> jsonObject;
 		FJsonSerializer::Deserialize(jsonReader, jsonObject);
 
+		FPostInfo postInfo;
 		// jsonObject 를 각 Data Type 에 셋팅
-		int32 userId = jsonObject->GetNumberField(TEXT("userId"));
-		int32 id = jsonObject->GetNumberField(TEXT("id"));
-		FString titie = jsonObject->GetStringField(TEXT("title"));
-		FString body = jsonObject->GetStringField(TEXT("body"));
+		postInfo.userId = jsonObject->GetNumberField(TEXT("userId"));
+		postInfo.id = jsonObject->GetNumberField(TEXT("id"));
+		postInfo.title = jsonObject->GetStringField(TEXT("title"));
+		postInfo.body = jsonObject->GetStringField(TEXT("body"));
 
 
 		/*FResponse info;
