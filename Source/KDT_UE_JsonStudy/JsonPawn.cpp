@@ -51,13 +51,14 @@ void AJsonPawn::DataToJsonExample()
 	info.height = 180;
 	info.gender = false;
 	info.interests = { TEXT("게임"), TEXT("돈"), TEXT("마술") };
+	info.randNum = {100, 90, 50, 77, 44, 66};
 
-	FString jsonString = UJsonUtility::DataToJson<FUserInfo>(info);
+	FString jsonString = UJsonUtility::DataToJson<FUserInfo>(&info);
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *jsonString);
 
-	FItemData itemData;
-	jsonString = UJsonUtility::DataToJson<FItemData>(itemData);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *jsonString);
+	/*FItemData itemData;
+	jsonString = UJsonUtility::DataToJson<FItemData>(&itemData);
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *jsonString);*/
 
 
 	//// Data ----> JsonObject ----> JsonString

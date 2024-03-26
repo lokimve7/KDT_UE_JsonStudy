@@ -21,6 +21,8 @@ public:
 	bool gender; // true : 여성, false : 남성
 	UPROPERTY()
 	TArray<FString> interests;
+	UPROPERTY()
+	TArray<int32> randNum;
 };
 
 USTRUCT(BlueprintType)
