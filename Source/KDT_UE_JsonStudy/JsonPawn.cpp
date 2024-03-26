@@ -4,6 +4,7 @@
 #include "JsonPawn.h"
 
 #include "JsonUtility.h"
+#include "JsonObjectConverter.h"
 
 // Sets default values
 AJsonPawn::AJsonPawn()
@@ -20,13 +21,7 @@ void AJsonPawn::BeginPlay()
 	
 	DataToJsonExample();
 
-	//JsonToDataExample();
-
-	/*FUserInfo userInfo;
-	UJsonUtility::DataToJson<FUserInfo>(userInfo);
-
-	FItemData itemData;
-	UJsonUtility::DataToJson<FItemData>(itemData);*/
+	JsonToDataExample();
 }
 
 // Called every frame
@@ -53,18 +48,19 @@ void AJsonPawn::DataToJsonExample()
 	info.interests = { TEXT("게임"), TEXT("돈"), TEXT("마술") };
 	info.randNum = {100, 90, 50, 77, 44, 66};
 
-	FString jsonString = UJsonUtility::DataToJson<FUserInfo>(&info);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *jsonString);
+	// FJsonObjectConverter 을 활용해서 구조체 -> Json string 변경
+	FString jsonString;
+	FJsonObjectConverter::UStructToJsonObjectString(
+		FUserInfo::StaticStruct(),
+		&info,
+		jsonString);
 
-	/*FItemData itemData;
-	jsonString = UJsonUtility::DataToJson<FItemData>(&itemData);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *jsonString);*/
+	UE_LOG(LogTemp, Warning, TEXT("json string : %s"), *jsonString);
 
-
-	//// Data ----> JsonObject ----> JsonString
-	//// 
-	//// JsonObject 만들자
-	//// FJsonObject* jsonObject = new FJsonObject();
+	// Data ----> JsonObject ----> JsonString
+	// 
+	// JsonObject 만들자
+	// FJsonObject* jsonObject = new FJsonObject();
 	//TSharedPtr<FJsonObject> jsonObject = MakeShared<FJsonObject>();
 	//jsonObject->SetStringField(TEXT("name"), info.name);
 	//jsonObject->SetNumberField(TEXT("age"), info.age);
@@ -91,27 +87,33 @@ void AJsonPawn::DataToJsonExample()
 void AJsonPawn::JsonToDataExample()
 {
 	FString jsonString = TEXT("{\"name\": \"김현진\",\"age\" : 20,\"height\" : 180,\"gender\" : false, \"interests\": [\"게임\",\"돈\",\"마술\"]}");
+
+	// FJsonObjectConverter 을 이용해서 JsonString 을 구조체로 변경
+	FUserInfo info;
+	FJsonObjectConverter::JsonObjectStringToUStruct(jsonString, &info);
+
+
 	// JsonString ----> JsonObject ----> Data
 	
-	// FString 을 JsonObject  로 만들자
-	TSharedRef<TJsonReader<>> jsonReader = TJsonReaderFactory<>::Create(jsonString);
-	TSharedPtr<FJsonObject> jsonObject;
-	FJsonSerializer::Deserialize(jsonReader, jsonObject);
+	//// FString 을 JsonObject  로 만들자
+	//TSharedRef<TJsonReader<>> jsonReader = TJsonReaderFactory<>::Create(jsonString);
+	//TSharedPtr<FJsonObject> jsonObject;
+	//FJsonSerializer::Deserialize(jsonReader, jsonObject);
 
-	// JsonObject 을 FUserInfo 로 만들자
-	FUserInfo info;
-	info.name = jsonObject->GetStringField(TEXT("name"));
-	info.age = jsonObject->GetNumberField(TEXT("age"));
-	info.height = jsonObject->GetNumberField(TEXT("height"));
-	info.gender = jsonObject->GetBoolField(TEXT("gender"));
+	//// JsonObject 을 FUserInfo 로 만들자
+	//FUserInfo info;
+	//info.name = jsonObject->GetStringField(TEXT("name"));
+	//info.age = jsonObject->GetNumberField(TEXT("age"));
+	//info.height = jsonObject->GetNumberField(TEXT("height"));
+	//info.gender = jsonObject->GetBoolField(TEXT("gender"));
 
-	// jsonArray 를 TArray 로 변환
-	TArray<TSharedPtr<FJsonValue>> jsonArray = jsonObject->GetArrayField(TEXT("interests"));
-	for (int32 i = 0; i < jsonArray.Num(); i++)
-	{
-		info.interests.Add(jsonArray[i]->AsString());
-		UE_LOG(LogTemp, Warning, TEXT("interest : %s"), *info.interests[i]);
-	}
+	//// jsonArray 를 TArray 로 변환
+	//TArray<TSharedPtr<FJsonValue>> jsonArray = jsonObject->GetArrayField(TEXT("interests"));
+	//for (int32 i = 0; i < jsonArray.Num(); i++)
+	//{
+	//	info.interests.Add(jsonArray[i]->AsString());
+	//	UE_LOG(LogTemp, Warning, TEXT("interest : %s"), *info.interests[i]);
+	//}
 
 
 	UE_LOG(LogTemp, Warning, TEXT("name - %s, age - %d, height - %f, gender - %d"),
