@@ -8,7 +8,8 @@ public class KDT_UE_JsonStudy : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Json", "JsonUtilities" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", 
+			"InputCore", "Json", "JsonUtilities", "HTTP" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

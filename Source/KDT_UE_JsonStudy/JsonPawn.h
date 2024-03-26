@@ -37,6 +37,8 @@ public:
 };
 
 
+
+
 UCLASS()
 class KDT_UE_JSONSTUDY_API AJsonPawn : public APawn
 {
@@ -61,4 +63,10 @@ public:
 public:
 	void DataToJsonExample();
 	void JsonToDataExample();
+
+public:
+	void RequestShortTermForecast();
+	void OnCompleteRequest(TSharedPtr<class IHttpRequest> Request, 
+							TSharedPtr<class IHttpResponse> Response, 
+							bool bConnectedSuccessfully);
 };

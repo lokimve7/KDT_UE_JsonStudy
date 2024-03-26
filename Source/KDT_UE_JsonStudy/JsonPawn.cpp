@@ -5,6 +5,9 @@
 
 #include "JsonUtility.h"
 #include "JsonObjectConverter.h"
+#include <Interfaces/IHttpRequest.h>
+#include <Interfaces/IHttpResponse.h>
+#include <HttpModule.h>
 
 // Sets default values
 AJsonPawn::AJsonPawn()
@@ -22,6 +25,8 @@ void AJsonPawn::BeginPlay()
 	DataToJsonExample();
 
 	JsonToDataExample();
+
+	RequestShortTermForecast();
 }
 
 // Called every frame
@@ -92,9 +97,7 @@ void AJsonPawn::JsonToDataExample()
 	FUserInfo info;
 	FJsonObjectConverter::JsonObjectStringToUStruct(jsonString, &info);
 
-
 	// JsonString ----> JsonObject ----> Data
-	
 	//// FString 을 JsonObject  로 만들자
 	//TSharedRef<TJsonReader<>> jsonReader = TJsonReaderFactory<>::Create(jsonString);
 	//TSharedPtr<FJsonObject> jsonObject;
@@ -119,5 +122,46 @@ void AJsonPawn::JsonToDataExample()
 	UE_LOG(LogTemp, Warning, TEXT("name - %s, age - %d, height - %f, gender - %d"),
 			*info.name, info.age, info.height, info.gender);
 
+}
+
+void AJsonPawn::RequestShortTermForecast()
+{
+	// Request 생성 (HTTP 통신을 하게 해주는 객체)
+	TSharedPtr<IHttpRequest> httpRequest = FHttpModule::Get().CreateRequest();
+	// 요청해야하는 URL 셋팅
+	httpRequest->SetURL(TEXT("https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey=4U7VkjL1aXP2trryYu4AoFIViMd4dAx7n9id9UFIBsiCv0gZ2%2BYkcqMT2Lfaieq%2FT%2FYPxd7Y0I2%2Bh7SqqU6WcQ%3D%3D&pageNo=1&numOfRows=1000&dataType=JSON&base_date=20240326&base_time=0600&nx=55&ny=127"));
+	// 헤더를 셋팅를 추가해달라는 요청이 있으면
+	httpRequest->SetHeader(TEXT("Contnet-Type"), TEXT("application/x-www-form-urlencoded; charset=utf-8"));
+	// GET, POST, PUT, DELETE
+	httpRequest->SetVerb(TEXT("GET"));
+	// 단 POST, PUT 일 경우에는 
+	//httpRequest->SetContentAsString(Json 형태의 Text 가 들어가면 된다.);
+	
+	// 응답이 올 때 호출되는 함수 등록
+	httpRequest->OnProcessRequestComplete().BindUObject(this, &AJsonPawn::OnCompleteRequest);
+
+	// 요청을 보내자
+	httpRequest->ProcessRequest();
+}
+
+
+void AJsonPawn::OnCompleteRequest(TSharedPtr<class IHttpRequest> Request, TSharedPtr<class IHttpResponse> Response, bool bConnectedSuccessfully)
+{
+	if (bConnectedSuccessfully)
+	{
+		FString jsonString = Response->GetContentAsString();
+		
+		auto jsonObject = UJsonUtility::StringToJson(jsonString);
+		auto responseObject = jsonObject->GetObjectField(TEXT("response"));
+		auto bodyObject = responseObject->GetObjectField(TEXT("body"));
+		auto itemsObject = bodyObject->GetObjectField(TEXT("items"));
+		auto itemArray = itemsObject->GetArrayField(TEXT("item"));
+		UE_LOG(LogTemp, Warning, TEXT("item count : %d"), itemArray.Num());
+
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("http result Fail"));
+	}
 }
 

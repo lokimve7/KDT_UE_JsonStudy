@@ -124,4 +124,12 @@ public:
 		FJsonSerializer::Serialize(jsonObject.ToSharedRef(), jsonWriter);
 		return jsonString;
 	}
+
+	static TSharedPtr<FJsonObject> StringToJson(FString jsonString)
+	{
+		TSharedRef<TJsonReader<>> jsonReader = TJsonReaderFactory<>::Create(jsonString);
+		TSharedPtr<FJsonObject> jsonObject;
+		FJsonSerializer::Deserialize(jsonReader, jsonObject);
+		return jsonObject;
+	}
 };
