@@ -54,6 +54,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void CreateShape(int32 shapeIdx);
+	void CreateShape(int32 shapeIdx, FVector pos, FRotator rot, FVector scale);
 
 	FVector GetRandLocation();
 	FRotator GetRandRotation();
@@ -61,6 +62,10 @@ public:
 	// 저장 함수
 	UFUNCTION(BlueprintCallable)
 	void SaveData();
+
+	// 불러오기 함수
+	UFUNCTION(BlueprintCallable)
+	void LoadData();
 
 
 	// Cube : 0, Sphere : 1, Cone : 2
