@@ -39,6 +39,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<AActor>> shapeFactory;
 
+	// 생성된 모양들을 담아놓는 변수
+	UPROPERTY(VisibleAnywhere)
+	TArray<class AShapeActor*> allShapes;
+
 public:
 	// 모양을 만든 함수
 	UFUNCTION(BlueprintCallable)
@@ -52,6 +56,11 @@ public:
 	void CreateShape(int32 shapeIdx);
 
 	FVector GetRandLocation();
+	FRotator GetRandRotation();
+
+	// 저장 함수
+	UFUNCTION(BlueprintCallable)
+	void SaveData();
 
 
 	// Cube : 0, Sphere : 1, Cone : 2
