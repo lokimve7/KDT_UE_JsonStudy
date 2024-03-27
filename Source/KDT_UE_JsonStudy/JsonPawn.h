@@ -140,7 +140,7 @@ public:
 
 public:
 	void RequestShortTermForecast();
-	void OnCompleteRequest(TSharedPtr<class IHttpRequest> Request, 
+	void OnCompleteRequest( TSharedPtr<class IHttpRequest> Request, 
 							TSharedPtr<class IHttpResponse> Response, 
 							bool bConnectedSuccessfully);
 };
