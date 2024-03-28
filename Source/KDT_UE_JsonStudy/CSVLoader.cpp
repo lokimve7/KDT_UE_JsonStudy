@@ -29,5 +29,19 @@ void CSVLoader::CSVToData(FString filename)
 	if (FFileHelper::LoadFileToString(fileContent, *path))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("file content : %s"), *fileContent);
+		// 한줄 한줄 나누기
+		TArray<FString> rows;
+		fileContent.ParseIntoArrayLines(rows);
+
+		// 변수 이름 나누기
+		TArray<FString> variableNames;
+		rows[0].ParseIntoArray(variableNames, TEXT(","));
+
+		// 값들을 나누기
+		for (int32 i = 1; i < rows.Num(); i++)
+		{
+			TArray<FString> values;
+			rows[i].ParseIntoArray(values, TEXT(","));
+		}
 	}
 }
