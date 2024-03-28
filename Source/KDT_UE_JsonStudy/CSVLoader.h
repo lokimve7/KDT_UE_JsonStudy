@@ -13,5 +13,5 @@ public:
 	CSVLoader();
 	~CSVLoader();
 
-	static void CSVToData(FString filename);
+	static TArray<struct FStudentInfo> CSVToData(FString filename);
 };

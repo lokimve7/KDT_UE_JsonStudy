@@ -11,13 +11,13 @@ struct FStudentInfo
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	FString name;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	int32 age;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	bool gender;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	FString studentId;
 };
 
@@ -41,4 +41,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(VisibleAnywhere)
+	TArray<FStudentInfo> allStudent;
 };
