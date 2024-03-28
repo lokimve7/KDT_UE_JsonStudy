@@ -21,6 +21,29 @@ public:
 	FString studentId;
 };
 
+USTRUCT(BlueprintType)
+struct FStopStatusInfo
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(VisibleAnywhere)
+	FString name;
+	UPROPERTY(VisibleAnywhere)
+	int32 id;
+	UPROPERTY(VisibleAnywhere)
+	int32 totalNumRide;
+	UPROPERTY(VisibleAnywhere)
+	int32 totalNumGetOff;
+	UPROPERTY(VisibleAnywhere)
+	int32 numRideByCard;
+	UPROPERTY(VisibleAnywhere)
+	int32 numGetOffByCard;
+	UPROPERTY(VisibleAnywhere)
+	int32 numRideByCash;
+	UPROPERTY(VisibleAnywhere)
+	int32 aveNumGetOff;
+};
+
 UCLASS()
 class KDT_UE_JSONSTUDY_API ACSVPawn : public APawn
 {
@@ -43,4 +66,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	TArray<FStudentInfo> allStudent;
+
+	UPROPERTY(VisibleAnywhere)
+	TArray<FStopStatusInfo> allStopStstus;
 };

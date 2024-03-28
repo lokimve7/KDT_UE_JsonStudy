@@ -16,6 +16,7 @@ void ACSVPawn::BeginPlay()
 	Super::BeginPlay();
 
 	allStudent = CSVLoader::CSVToData<FStudentInfo>(TEXT("StudentInfo.csv"));
+	allStopStstus = CSVLoader::CSVToData<FStopStatusInfo>(TEXT("StopStatusInfo.csv"));
 }
 
 // Called every frame

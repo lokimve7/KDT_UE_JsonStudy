@@ -50,6 +50,11 @@ public:
 				// 값을 , 기준으로 나누자
 				TArray<FString> values;
 				rows[i].ParseIntoArray(values, TEXT(","));
+				if (values.Num() != variableNames.Num())
+				{
+					UE_LOG(LogTemp, Error, TEXT("value contain , %d"), i);
+					continue;
+				}
 
 				// 나눈 값을 자료형에 맞게 대입하자
 				T info;
@@ -59,7 +64,15 @@ public:
 
 				for (int32 j = 0; j < variableNames.Num(); j++)
 				{
+					// variableNames[j] 이름으로 되어있는 변수의 정보
 					FProperty* property = p->FindPropertyByName(*variableNames[j]);
+
+					if (property == nullptr)
+					{
+						UE_LOG(LogTemp, Error, TEXT("proprety is null : %s"), *variableNames[j]);
+						continue;
+					}
+
 					if (property->IsA<FStrProperty>())
 					{
 						FString* valuePtr = property->ContainerPtrToValuePtr<FString>(&info);
