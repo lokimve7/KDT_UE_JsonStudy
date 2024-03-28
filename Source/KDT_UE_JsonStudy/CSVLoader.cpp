@@ -40,6 +40,7 @@ TArray<FStudentInfo> CSVLoader::CSVToData(FString filename)
 		// 변수 이름 나누기
 		TArray<FString> variableNames;
 		rows[0].ParseIntoArray(variableNames, TEXT(","));
+		
 
 		// 값들을 나누기
 		

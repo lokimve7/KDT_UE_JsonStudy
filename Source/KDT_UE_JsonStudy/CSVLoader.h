@@ -42,6 +42,8 @@ public:
 			// 변수 이름 나누기
 			TArray<FString> variableNames;
 			rows[0].ParseIntoArray(variableNames, TEXT(","));
+			for (int32 i = 0; i < variableNames.Num(); i++)
+				variableNames[i].RemoveSpacesInline();
 
 			// 값들을 나누기
 

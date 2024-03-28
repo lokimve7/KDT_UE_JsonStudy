@@ -17,6 +17,10 @@ void ACSVPawn::BeginPlay()
 
 	allStudent = CSVLoader::CSVToData<FStudentInfo>(TEXT("StudentInfo.csv"));
 	allStopStstus = CSVLoader::CSVToData<FStopStatusInfo>(TEXT("StopStatusInfo.csv"));
+
+	FString str = TEXT("H e l l o");
+	str.RemoveSpacesInline();
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *str);
 }
 
 // Called every frame
