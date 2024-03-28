@@ -7,6 +7,65 @@
 #include "JsonPawn.generated.h"
 
 USTRUCT(BlueprintType)
+struct FSchoolData
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY()
+	FString school;
+	UPROPERTY()
+	FString department;
+	UPROPERTY()
+	FString gender;
+	UPROPERTY()
+	int32 numberOfClasses;
+};
+
+USTRUCT(BlueprintType)
+struct FStudyInfo
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	FString id;
+	UPROPERTY()
+	FString shortname;
+	UPROPERTY()
+	FString url;
+	UPROPERTY()
+	FString course_image;
+	UPROPERTY()
+	FString org;
+	UPROPERTY()
+	FString org_name;
+	UPROPERTY()
+	FString enrollment_start;
+	UPROPERTY()
+	FString enrollment_end;
+	UPROPERTY()
+	FString study_start;
+	UPROPERTY()
+	FString study_end;
+	UPROPERTY()
+	FString professor;
+	UPROPERTY()
+	FString public_yn;
+};
+
+USTRUCT(BlueprintType)
+struct FStudyInfoList
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY()
+	TArray<FStudyInfo> items;
+};
+
+
+
+
+USTRUCT(BlueprintType)
 struct FItemData
 {
 	GENERATED_BODY()
@@ -36,7 +95,13 @@ public:
 	FItemData itemData;
 };
 
-
+UENUM(BlueprintType)
+enum class EType : uint8
+{
+	AAA,
+	BBB,
+	MAX
+};
 
 
 UCLASS()
@@ -63,4 +128,7 @@ public:
 public:
 	void DataToJsonExample();
 	void JsonToDataExample();
+	void CSVToDataExample();
+	void GetTest();
+	void OnHttpResponse(TSharedPtr<class IHttpRequest> request, TSharedPtr<class IHttpResponse> response, bool bConnectedSuccessfully);
 };
